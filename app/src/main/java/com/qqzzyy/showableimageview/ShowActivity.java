@@ -27,6 +27,8 @@ public class ShowActivity extends AppCompatActivity {
     float PaddingY;
     float X ;
     float Y ;
+    float height;
+    float width;
     TranslateAnimation outAnimation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +42,25 @@ public class ShowActivity extends AppCompatActivity {
         }
 
         dm = getResources().getDisplayMetrics();
+
         X = getIntent().getFloatExtra("X",0);
         Y = getIntent().getFloatExtra("Y",0);
+
+        height = getIntent().getFloatExtra("height",0);
+        width = getIntent().getFloatExtra("width",0);
+
         bis = getIntent().getByteArrayExtra("bitmap");
         bitmap = BitmapFactory.decodeByteArray(bis, 0, Objects.requireNonNull(bis).length);
         showView = (ShowView)findViewById(R.id.show_dialog);
         showView.setImageBitmap(bitmap);
         showView.setupView();
-        TranslateAnimation translateAnimation = new TranslateAnimation(X - ((float)(dm.widthPixels) - showView.getWidth())/2,0,
-                Y - ((float)(dm.heightPixels)-showView.getHeight())/2,0);
+
+        TranslateAnimation translateAnimation = new TranslateAnimation(X - ((float)(dm.widthPixels) - width)/2,0,
+                Y - ((float)(dm.heightPixels)-height)/2,0);
         translateAnimation.setDuration(500);
         showView.startAnimation(translateAnimation);
-        outAnimation = new TranslateAnimation(0,X - ((float)(dm.widthPixels) - showView.getWidth())/2,
-                0,Y - ((float)(dm.heightPixels)-showView.getHeight())/2);
+        outAnimation = new TranslateAnimation(0,X - ((float)(dm.widthPixels) - width)/2,
+                0,Y - ((float)(dm.heightPixels)-height)/2);
         outAnimation.setDuration(400);
         outAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -76,8 +84,8 @@ public class ShowActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                showView.matrix.postTranslate(X - ((float)(dm.widthPixels) - showView.getWidth())/2,
-                        Y - ((float)(dm.heightPixels)-showView.getHeight())/2);
+                showView.matrix.postTranslate(X - ((float)(dm.widthPixels) - width)/2,
+                        Y - ((float)(dm.heightPixels)-height)/2);
                 showView.startAnimation(outAnimation);
                 return true;
         }

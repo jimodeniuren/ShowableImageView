@@ -39,6 +39,8 @@ public class ShowableImageView extends ImageView {
     ShowView showView = new ShowView(getContext());
     float X;
     float Y;
+    float height;
+    float width;
     ShowableImageView showableImageView = ShowableImageView.this;
 
     public void setImageBitmap(Bitmap bitmap)
@@ -56,11 +58,15 @@ public class ShowableImageView extends ImageView {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 X = showableImageView.getLeft();
                 Y = showableImageView.getTop();
+                height = showableImageView.getHeight();
+                width = showableImageView.getWidth();
                 sourceBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                 byte[] bitmapByte = baos.toByteArray();
                 intent.putExtra("bitmap",bitmapByte);
                 intent.putExtra("X",X);
                 intent.putExtra("Y",Y);
+                intent.putExtra("height",height);
+                intent.putExtra("width",width);
                 context.startActivity(intent);
 //                LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 //                @SuppressLint("InflateParams")
